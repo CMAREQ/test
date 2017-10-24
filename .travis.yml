@@ -5,4 +5,4 @@ python:
 install:
   pip install bs4
 script:
-  coverage run test.py
+  python test.py
