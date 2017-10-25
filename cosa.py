@@ -4,7 +4,7 @@ import sys
 def birthdayCakeCandles(n, ar):
     #la lista es acomodada de forma decendente
     ar.sort(reverse=True)
-    #con esto podemos saber que el núm con mas tamaño se encuentra en la posición 0
+
     max = ar[0]
     #se inicializa un contador de las velas que tengan el mismo tamaño
     c = 0
