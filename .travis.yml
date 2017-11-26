@@ -3,12 +3,11 @@ language: python
 python:
   - "3.6"
 install:
-  - pip install --user ez_setup
-  - pip install --user urllib3[secure]
-  - pip install --user sqlalchemy
-  - pip install --user requests
-  - pip install --user bs4
-  - pip install --user urlextract
+  - pip install urllib3[secure]
+  - pip install sqlalchemy
+  - pip install requests
+  - pip install bs4
+  - pip install urlextract
 script: python test.py
 notifications:
   email: false
