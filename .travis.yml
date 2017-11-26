@@ -4,7 +4,7 @@ python:
 install:
   - pip install --user urllib3[secure]
   - pip install --user sqlalchemy
-  - pip install --user urlextract
+
   - pip install --user bs4
 script: python test.py
 notifications:
