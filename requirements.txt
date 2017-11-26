@@ -1,3 +1,2 @@
 sqlalchemy
 bs4
-urlextract
