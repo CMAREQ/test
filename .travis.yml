@@ -2,9 +2,9 @@ languaje: python
 python:
   - "3.6"
 install:
-  - pip install -r sqlalchemy
-  - pip install -r urlextract
-  - pip install -r bs4
+  - pip install sqlalchemy
+  - pip install urlextract
+  - pip install bs4
 script: python test.py
 notifications:
   email: false
