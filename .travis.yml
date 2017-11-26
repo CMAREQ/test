@@ -3,7 +3,6 @@ languaje: python
 python:
   - "3.6"
 install:
-  - pip install --upgrade setuptools
   - pip install ez_setup
   - pip install --user urllib3[secure]
   - pip install --user sqlalchemy
