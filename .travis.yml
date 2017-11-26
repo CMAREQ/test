@@ -2,7 +2,7 @@ languaje: python
 python:
   - "3.6"
 install:
-  pip install sqlalchemy
+  sudo pip install sqlalchemy
 script: python test.py
 notifications:
   email: false
