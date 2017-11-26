@@ -2,7 +2,7 @@ languaje: python
 python:
   - "3.6"
 install:
-  - pip install -r requirements.txt
+  pip install sqlalchemy, urlextract, bs4
 script: python test.py
 notifications:
   email: false
