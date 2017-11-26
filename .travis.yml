@@ -6,7 +6,7 @@ install:
   - pip install --user sqlalchemy
   - pip install --user requests
   - pip install --user bs4
-  - sudo pip install --user urlextract
+  - pip install --user urlextract
 script: python test.py
 notifications:
   email: false
