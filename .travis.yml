@@ -2,8 +2,8 @@ languaje: python
 python:
   - "3.6"
 install:
-  - pip install urllib3[secure]
-  - pip install sqlalchemy
+  - pip install --user urllib3[secure]
+  - pip install --user sqlalchemy
   - pip install urlextract
   - pip install bs4
 script: python test.py
