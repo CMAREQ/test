@@ -4,8 +4,8 @@ python:
 install:
   - pip install --user urllib3[secure]
   - pip install --user sqlalchemy
-  - pip install urlextract
-  - pip install bs4
+  - pip install --user urlextract
+  - pip install --user bs4
 script: python test.py
 notifications:
   email: false
