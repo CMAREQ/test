@@ -1,5 +1,5 @@
 import unittest
-from scrape import current_target_url, get_total_records, get_json_data, crawler
+from scrape import current_target_url, get_total_records, crawler
 
 class TestScrape(unittest.TestCase):
 
