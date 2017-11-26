@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib.request, time, json, requests, os
+import urllib, time, json, requests, os
 from urlextract import URLExtract
 from bs4 import BeautifulSoup
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
