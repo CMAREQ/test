@@ -2,7 +2,6 @@ languaje: python
 python:
   "3.6"
 install:
-  pip install urlextract
   pip install -r requirements.txt
 script:
   python test.py
