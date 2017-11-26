@@ -3,7 +3,6 @@ python:
   - "3.6"
 install:
   - pip install urllib3[secure]
-  - pip install certifi
   - pip install sqlalchemy
   - pip install urlextract
   - pip install bs4
