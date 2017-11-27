@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib, time, json, requests, os
+import urllib.request, time, json, requests, os
 from urlextract import URLExtract
 from bs4 import BeautifulSoup
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
@@ -58,8 +58,8 @@ class Member(Base, fact):
     band_id = Column('band_id', Integer, ForeignKey("Band.id"), nullable=False)
 
 
+class S():
 
-class Scrape():
     def current_target_url(page, display_start):
         # Actualizará el URL para cambiar a la siguiente página del DT si es necesario.
         target_url = 'https://www.metal-archives.com/browse/ajax-country/c/SE/json/1'
@@ -77,7 +77,6 @@ class Scrape():
             total_records = data["iTotalRecords"]
 
         return total_records
-
 
     def get_json_data(target_url):
         # Trae datos necesarios del json.
@@ -97,11 +96,12 @@ class Scrape():
         current_records = 0
 
         # URL inicial.
-        target_url = Scrape.current_target_url(page, display_start)
+        target_url = S.current_target_url(page, display_start)
 
         # Records totales y entradas de la primera página.
-        total_records = 1#get_total_records(target_url)
-        json_data = Scrape.get_json_data(target_url)
+        total_records =1#get_total_records(target_url)
+        json_data = S.get_json_data(target_url)
+
 
         # Mientras no se pase del total de records:
         while current_records < total_records:
@@ -124,10 +124,11 @@ class Scrape():
                 # -> Si el request sale bien:
                 if r.status_code == 200:
                     soup = BeautifulSoup(r.content, 'html.parser')
+
                     # -> Hacemos el parseo de los atributos junto con la inserción objeto -> BD.
-                    Scrape.get_band_attributes(soup)
-                    Scrape.get_band_disco(soup, current_records)
-                    Scrape.get_band_members(soup, current_records)
+                    S.get_band_attributes(soup)
+                    S.get_band_disco(soup, current_records)
+                    S.get_band_members(soup, current_records)
 
                 # -> 2 segundos de espera por ciclo.
                 time.sleep(2)
@@ -139,15 +140,15 @@ class Scrape():
             display_start += 500
 
             # Actualización de URL inicial.
-            target_url = Scrape.current_target_url(page, display_start)
+            target_url = S.current_target_url(page, display_start)
             # Actualización de json inicial.
-            json_data = Scrape.get_json_data(target_url)
-        return True
-
+            json_data = S.get_json_data(target_url)
 
     def get_band_attributes(soup):
         # Instancias tanto para la sesión como para la clase que definimos para modelar las bandas.
         engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        # Estos dos son necesarios para cada sesión de base de datos.
+        Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
         session = Session()
         band = fact.factory("band")
@@ -191,12 +192,15 @@ class Scrape():
         # Cerramos sesión.
         session.close()
 
+
     def get_band_disco(soup, current_records):
         # Instancia de URLExtract.
         extractor = URLExtract()
 
         # Abrimos sesión con la base de datos.
         engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        # Estos dos son necesarios para cada sesión de base de datos.
+        Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
         session = Session()
 
@@ -256,6 +260,8 @@ class Scrape():
     def get_band_members(soup, current_records):
         # Abrimos sesión con la base de datos.
         engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        # Estos dos son necesarios para cada sesión de base de datos.
+        Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
         session = Session()
 
@@ -279,6 +285,5 @@ class Scrape():
         session.close()
 
 
-
 if __name__ == '__main__':
-    Scrape.crawler()
+    S.crawler()
