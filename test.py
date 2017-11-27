@@ -1,27 +1,40 @@
 import unittest
-from scrape import current_target_url, get_total_records, crawler
+import unittest.mock
+from scrape import Scrape
+from unittest.mock import patch, Mock
 
 class TestScrape(unittest.TestCase):
 
-    def setUp(self):
-        self.target_url = 'https://www.metal-archives.com/browse/ajax-country/c/SE/json/1'
-        self.target_url += '?sEcho=1&iColumns=4&sColumns=&iDisplayStart=0&iDisplayLength=500'
-        self.target_url += '&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&iSortCol_0=0'
-        self.target_url += '&sSortDir_0=asc&iSortingCols=1&bSortable_0=true&bSortable_1=true'
-        self.target_url += '&bSortable_2=true&bSortable_3=false&_=1505682951191'
+    @patch('scrape.Scrape.current_target_url', return_value = "Pass")
+    def test_target(self,suma):
+        self.assertEqual(suma(), "Pass")
+
+    @patch('scrape.Scrape.get_total_records', return_value = 1)
+    def test_TotalRecords(self, TR):
+        self.assertEqual(TR(), 1)
+
+    @patch('scrape.Scrape.get_json_data', return_value = "Pass")
+    def test_JsonData(self,json):
+        self.assertEqual(json(), "Pass")
+
+    @patch('scrape.Scrape.crawler', return_value = True)
+    def test_Crawler(self, cr):
+        self.assertTrue(cr())
+
+    @patch('scrape.Scrape.get_band_attributes', return_value = "Atributos de banda")
+    def test_BandAttributes(self,att):
+        soup = "Objeto tipo soup"
+        self.assertEqual(att(soup), "Atributos de banda")
+
+    @patch('scrape.Scrape.get_band_disco', return_value = "Discografía de banda")
+    def test_BandDisco(self, disc):
+        self.assertEqual(disc(),"Discografía de banda")
+
+    @patch('scrape.Scrape.get_band_members', return_value = "Miembros de banda")
+    def test_BandMemebers(self, mem):
+        self.assertEqual(mem(),"Miembros de banda")
 
 
-    def test_TargetURL(self):
-        self.assertEqual(current_target_url(1,0), self.target_url)
-
-    def test_TotalRecords(self):
-        self.assertEqual(get_total_records(self.target_url), 4382)
-
-    def test_Crawler(self):
-        self.assertTrue(crawler())
-
-    #def test_GetJsonData(self):
-    #    self.assertEqual(get_json_data(self.target_url),  {'iTotalRecords': 4382, 'iTotalDisplayRec[80232 chars]>'})
 
 if __name__ == '__main__':
     unittest.main()
