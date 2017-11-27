@@ -1,6 +1,3 @@
-certifi
-urllib3[secure]
-requests
-request
 sqlalchemy
 bs4
+urlextract
