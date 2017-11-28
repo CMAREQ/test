@@ -25,7 +25,7 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(S.current_target_url(1, 0), self.target_url)
 
     def test_GetTotalRecords(self):
-        self.assertEqual(S.get_total_records(self.target_url), 4382)
+        self.assertEqual(S.get_total_records(self.target_url), 4383)
 
     def test_Crawler(self):
         self.assertIsNone(S.crawler())
