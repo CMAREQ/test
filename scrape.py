@@ -146,7 +146,7 @@ class S():
 
     def get_band_attributes(soup):
         # Instancias tanto para la sesión como para la clase que definimos para modelar las bandas.
-        engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        engine = create_engine('sqlite:///swedish_bands.db')
         # Estos dos son necesarios para cada sesión de base de datos.
         Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
@@ -156,7 +156,6 @@ class S():
         # Del objeto "soup" (el contenido será parecido a band_page.html) que viene como parámetro:
         # -> Busca <h1 class="band_name">, que es el tag donde se encuentra el nombre de la banda.
         band_name = soup.find("h1", {"class": "band_name"})
-
 
         # -> Buscamos en <dd> que es donde se encuentran los atributos generales.
         # -> Regresa una lista de tags y su contenido.
@@ -198,7 +197,7 @@ class S():
         extractor = URLExtract()
 
         # Abrimos sesión con la base de datos.
-        engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        engine = create_engine('sqlite:///swedish_bands.db')
         # Estos dos son necesarios para cada sesión de base de datos.
         Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
@@ -252,14 +251,14 @@ class S():
                 session.commit()
                 # Cerramos sesión.
                 session.close()
-            except:
+            except Exception as e:
                 # En caso de que la banda no tenga releases sólo pasa al siguiente.
                 session.close()
 
 
     def get_band_members(soup, current_records):
         # Abrimos sesión con la base de datos.
-        engine = create_engine('sqlite:///swedish_bands.db', echo=True)
+        engine = create_engine('sqlite:///swedish_bands.db')
         # Estos dos son necesarios para cada sesión de base de datos.
         Base.metadata.create_all(bind=engine)
         Session = sessionmaker(bind=engine)
@@ -283,6 +282,7 @@ class S():
         session.commit()
         # Cerramos sesión.
         session.close()
+        return True
 
 
 if __name__ == '__main__':

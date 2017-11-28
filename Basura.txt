@@ -1,0 +1,35 @@
+    # @patch('json.loads', return_value = "data")
+    # def test_JsonData_MockJson(self, json):
+    #     self.assertEqual(S.get_json_data(self.target_url), "data")
+# @patch('scrape.S.get_total_records')
+    # def test_ccc(self, mockS):
+    #     s = mockS()
+    #     s.get_json_data.return_value = self.data
+    #     mockS.get_total_records.return_value = 27
+    #     s.crawler()
+    #
+    # @patch('scrape.S')
+    # def test_JsonData_MockClass(self, mockS):
+    #     s = mockS()
+    #     s.get_json_data.return_value = self.data
+    #     self.assertEqual(s.get_json_data(self.target_url), self.data)
+    #
+    # @patch('scrape.S.crawler', return_value = True)
+    # def test_Crawler(self, crwlr):
+    #     self.assertTrue(crwlr())
+    #     assert crwlr.called
+    #
+    # @patch('scrape.S.get_band_attributes', return_value = True)
+    # def test_BandAttributes(self,att):
+    #     self.assertTrue(att())
+    #     assert att.called
+    #
+    # @patch('scrape.S.get_band_disco', return_value = True)
+    # def test_BandDisco(self, disc):
+    #     self.assertTrue(disc())
+    #     assert disc.called
+    #
+    # @patch('scrape.S.get_band_members', return_value = True)
+    # def test_BandMemebers(self, mem):
+    #     self.assertTrue(mem())
+    #     assert mem.called

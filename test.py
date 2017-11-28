@@ -1,8 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
 from scrape import *
-
-
+from crud import *
 class TestScrape(unittest.TestCase):
 
     def setUp(self):
@@ -12,11 +11,15 @@ class TestScrape(unittest.TestCase):
         self.target_url += '&sSortDir_0=asc&iSortingCols=1&bSortable_0=true&bSortable_1=true'
         self.target_url += '&bSortable_2=true&bSortable_3=false&_=1505682951191'
 
+        self.data = '[["<a href="https://www.metal-archives.com/bands/Abomation/2853'
+        self.data += '>Abomation</a>","Trash Metal","Grängesberg","<span class=\"split-up\">Split-up</span>"]]'
 
-        self.data = '[["<a href="https://www.metal-archives.com/bands/%24ilverdollar/60323'
-        self.data += '>$ilverdollar</a>","Heavy/Power Metal","Nyköping","<span class=\"active\">Active</span>"]]'
 
-        self.soup = "Ejemplo objeto tipo Soup"
+
+    def test_Factory(self):
+        self.assertIsInstance(fact.factory("band"), Band)
+        self.assertIsInstance(fact.factory("discography"), Discography)
+        self.assertIsInstance(fact.factory("member"), Member)
 
     def test_CurrentTargetURL(self):
         self.assertEqual(S.current_target_url(1, 0), self.target_url)
@@ -24,37 +27,29 @@ class TestScrape(unittest.TestCase):
     def test_GetTotalRecords(self):
         self.assertEqual(S.get_total_records(self.target_url), 4382)
 
-    @patch('scrape.S')
-    def test_JsonData(self, mockS):
-        s = mockS()
-        s.get_json_data.return_value = self.data
+    def test_Crawler(self):
+        self.assertIsNone(S.crawler())
 
-        self.assertEqual(s.get_json_data(self.target_url), self.data)
+    @patch('crud.print', return_value = " ")
+    def test_Select(self, s):
+        self.assertIsNone(selectFromBand("- - -"))
+        self.assertIsNone(selectFromBand(""))
 
-    @patch('scrape.S.crawler', return_value = True)
-    def test_Crawler(self, crwlr):
-        self.assertTrue(crwlr())
+        self.assertIsNone(selectFromDiscography("- - -"))
+        self.assertIsNone(selectFromDiscography(""))
 
-    @patch('scrape.S.get_band_attributes', return_value = True)
-    def test_BandAttributes(self,att):
-        self.assertTrue(att(self.soup))
+        self.assertIsNone(selectFromMember("- - -"))
+        self.assertIsNone(selectFromMember(""))
 
-    @patch('scrape.S.get_band_disco', return_value = True)
-    def test_BandDisco(self, disc):
-        self.assertTrue(disc(self.soup, 500))
+    def test_Delete(self):
+        self.assertIsNone(deleteFromMember("(Jhator)"))
+        self.assertIsNone(deleteFromDiscography("(Jhator)"))
+        self.assertIsNone(deleteFromBand("(Jhator)"))
 
-    @patch('scrape.S.get_band_members', return_value = True)
-    def test_BandMemebers(self, mem):
-        self.assertTrue(mem(self.soup, 500))
-
-
-        # algo = s.get_json_data()
-        # self.assertIsNotNone(algo)
-        # #assert mockS is scrape.S
-        # assert mockS.called
-        # s.get_json_data.assert_called_with()
-
-
+    def test_Update(self):
+        self.assertIsNone(updateMemberName("Ola Berg", "Adio Berg"))
+        self.assertIsNone(updateDiscographyName("Morte", "Moride"))
+        self.assertIsNone(updateBandName("- - -", "+ + +"))
 
 if __name__ == '__main__':
     unittest.main()
